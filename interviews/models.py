@@ -2,6 +2,8 @@
 from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.conf import settings
 
 from interviews.managers import InterviewManager
@@ -31,6 +33,14 @@ class QuestionOrder(models.Model):
     question = models.ForeignKey(Question)
     order = models.IntegerField()
 
+class Category(models.Model):
+    site = models.ForeignKey(Site, default=settings.SITE_ID, related_name="interview_categories")
+    name = models.CharField(max_length=100)
+    slug = models.SlugField()
+    
+    def __unicode__(self):
+        return self.name
+
 class Interview(models.Model):
     site = models.ForeignKey(Site, default=settings.SITE_ID)
     template = models.ForeignKey(InterviewTemplate)
@@ -45,7 +55,9 @@ class Interview(models.Model):
     
     introduction = models.TextField(blank=True, null=True)
     footnotes = models.TextField(blank=True, null=True)
-
+    
+    categories = models.ManyToManyField(Category, verbose_name="Categories")
+    
     objects = InterviewManager()
 
     class Meta:
