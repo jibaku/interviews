@@ -1,11 +1,12 @@
-from django.views.generic.list_detail import object_detail, object_list
-from interviews.models import Interview
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.conf import settings
 
-def interview_detail(request, interview_slug):
-    queryset = Interview.objects.published()
-    return object_detail(request, queryset=queryset, slug=interview_slug, slug_field='slug')
+from interviews.models import Interview
 
-def interview_list(request):
+class InterviewDetailView(DetailView):
     queryset = Interview.objects.published()
-    return object_list(request, queryset=queryset)
+
+class InterviewListView(ListView):
+    paginate_by = 5
+    queryset = Interview.objects.published()

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.db import models
 from django.conf import settings
-
-import datetime
 
 class InterviewManager(models.Manager):
     def published(self):

@@ -1,49 +1,15 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.db import models
-from django.contrib.sites.models import Site
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 from django.conf import settings
+
+from django.contrib.sites.models import Site
 
 from interviews.managers import InterviewManager
 
-import datetime
-
-class Question(models.Model):
-    site = models.ForeignKey(Site, default=settings.SITE_ID)
-    question = models.TextField()
-
-    def __unicode__(self):
-        return self.question
-
-class InterviewTemplate(models.Model):
-    site = models.ForeignKey(Site, default=settings.SITE_ID)
-    
-    title = models.CharField(max_length=255)
-    slug = models.SlugField()
-
-    questions = models.ManyToManyField(Question, through='QuestionOrder')
-
-    def __unicode__(self):
-        return self.title
-
-class QuestionOrder(models.Model):
-    interview = models.ForeignKey(InterviewTemplate)
-    question = models.ForeignKey(Question)
-    order = models.IntegerField()
-
-class Category(models.Model):
-    site = models.ForeignKey(Site, default=settings.SITE_ID, related_name="interview_categories")
-    name = models.CharField(max_length=100)
-    slug = models.SlugField()
-    
-    def __unicode__(self):
-        return self.name
-
 class Interview(models.Model):
     site = models.ForeignKey(Site, default=settings.SITE_ID)
-    template = models.ForeignKey(InterviewTemplate)
     
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -55,8 +21,6 @@ class Interview(models.Model):
     
     introduction = models.TextField(blank=True, null=True)
     footnotes = models.TextField(blank=True, null=True)
-    
-    categories = models.ManyToManyField(Category, verbose_name="Categories")
     
     objects = InterviewManager()
 
@@ -74,21 +38,13 @@ class Interview(models.Model):
     def answers(self):
         return Answer.objects.for_interview(self)
 
-class AnswerManager(models.Manager):
-    def for_interview(self, interview):
-        return self.filter(interview=interview).filter(answered=True).order_by('order')
-
 class Answer(models.Model):
     interview = models.ForeignKey(Interview)
-    question = models.ForeignKey(Question)
     order = models.IntegerField()
-    answered = models.BooleanField(default=False)
+    question = models.TextField(blank=True)
     response = models.TextField(blank=True)
-    
-    objects = AnswerManager()
     
     class Meta:
         unique_together = (
             ('interview', 'order'),
-            ('interview', 'question'),
         )

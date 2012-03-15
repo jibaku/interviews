@@ -2,9 +2,9 @@ from distutils.core import setup
  
 setup(
     name = "interviews",
-    version = "0.1",
+    version = "0.2",
     author = "Fabien Schwob",
-    author_email = "fabien@x-phuture.com",
+    author_email = "github@x-phuture.com",
     license = "BSD",
     url = "http://bitbucket.org/jibaku/interviews",
     packages = [
