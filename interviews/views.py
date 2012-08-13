@@ -9,6 +9,10 @@ class InterviewDetailView(DetailView):
         queryset = Interview.objects.published()
         return queryset
     
+    def get_context_data(self, **kwargs):
+        context = super(InterviewDetailView, self).get_context_data(**kwargs)
+        context['pictures'] = self.object.interviewpicture_set.all()
+        return context
 
 class InterviewListView(ListView):
     paginate_by = 5

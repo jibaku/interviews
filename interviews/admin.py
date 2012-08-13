@@ -33,7 +33,8 @@ class QuoteAdmin(admin.ModelAdmin):
 admin.site.register(Quote, QuoteAdmin)
 
 class PictureAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('image', 'interview', 'legend')
+    list_filter = ('interview',)
 
 admin.site.register(Picture, PictureAdmin)
 
