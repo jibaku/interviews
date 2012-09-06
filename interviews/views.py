@@ -2,7 +2,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.conf import settings
 from django.http import Http404
-from interviews.models import Interview, Person
+from interviews.models import Interview, Product
 
 class InterviewDetailView(DetailView):
     def get_queryset(self):
@@ -48,4 +48,14 @@ class InterviewListView(ListView):
         context = super(InterviewListView, self).get_context_data(**kwargs)
         context['filter'] = self.get_current_filter()
         context['total_interviews'] = Interview.objects.published().count()
+        return context
+
+class ProductDetailView(DetailView):
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['interviews'] = self.object.interviewproduct_set.all()
         return context
