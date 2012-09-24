@@ -90,6 +90,7 @@ class Answer(models.Model):
         unique_together = (
             ('interview', 'order'),
         )
+        ordering = ['order']
 
 
 class Quote(models.Model):
