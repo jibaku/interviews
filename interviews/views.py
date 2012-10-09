@@ -18,7 +18,6 @@ class InterviewDetailView(DetailView):
 class PreviewInterviewDetailView(DetailView):
     def get_object(self):
         obj = Interview.objects.on_site().get(slug=self.kwargs['slug'])
-        print obj.preview_hash
         if obj.preview_hash == self.kwargs.get('hash', ""):
             return obj
         else:
@@ -26,6 +25,7 @@ class PreviewInterviewDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PreviewInterviewDetailView, self).get_context_data(**kwargs)
+        context['pictures'] = self.object.interviewpicture_set.all()
         context['is_preview'] = True
         return context
 
