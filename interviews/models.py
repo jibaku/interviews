@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import hashlib
 
 from django.db import models
 from django.conf import settings
@@ -70,6 +71,10 @@ class Interview(models.Model):
     @property
     def selected_picture(self):
         return Picture.objects.filter(interviewpicture__is_selected=True).get(interview=self)
+
+    @property
+    def preview_hash(self):
+        return hashlib.md5("%s-%s-%s" % (self.id, self.slug, self.site_id)).hexdigest()
 
 class Picture(models.Model):
     interview = models.ForeignKey(Interview)

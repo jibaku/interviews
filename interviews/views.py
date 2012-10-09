@@ -3,6 +3,7 @@ from django.views.generic.detail import DetailView
 from django.conf import settings
 from django.http import Http404
 from interviews.models import Interview, Product
+from interviews.managers import published
 
 class InterviewDetailView(DetailView):
     def get_queryset(self):
@@ -12,6 +13,20 @@ class InterviewDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(InterviewDetailView, self).get_context_data(**kwargs)
         context['pictures'] = self.object.interviewpicture_set.all()
+        return context
+
+class PreviewInterviewDetailView(DetailView):
+    def get_object(self):
+        obj = Interview.objects.on_site().get(slug=self.kwargs['slug'])
+        print obj.preview_hash
+        if obj.preview_hash == self.kwargs.get('hash', ""):
+            return obj
+        else:
+            raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(PreviewInterviewDetailView, self).get_context_data(**kwargs)
+        context['is_preview'] = True
         return context
 
 class InterviewListView(ListView):
@@ -57,5 +72,5 @@ class ProductDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
-        context['interviews'] = self.object.interviewproduct_set.all()
+        context['interviews'] = Interview.objects.published().filter(products__product=self.object)
         return context
