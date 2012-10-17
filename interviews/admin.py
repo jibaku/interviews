@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+from django.core.urlresolvers import reverse
 
 from interviews.models import Interview, Answer, Quote, Person
 from interviews.models import Picture, Product, InterviewProduct, InterviewPicture
@@ -19,10 +20,15 @@ class PersonAdmin(admin.ModelAdmin):
 admin.site.register(Person, PersonAdmin)
 
 class InterviewAdmin(admin.ModelAdmin):
-    list_display = ('title', 'published_on', 'is_published')
+    list_display = ('title', 'published_on', 'is_published', 'preview_link')
     list_filter = ('site', 'published_on', 'is_published')
     prepopulated_fields = {"slug": ("title",)}
     inlines = (AnswerInline, InterviewPictureInline)
+
+    def preview_link(self, obj):
+      return '<a href="%s">Preview</a>' % (reverse('interviews-preview', args=[obj.preview_hash, obj.slug]),)
+    preview_link.short_description = 'Preview'
+    preview_link.allow_tags = True
 
 admin.site.register(Interview, InterviewAdmin)
 
@@ -44,7 +50,8 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class InterviewProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('product', 'interview')
+    list_filter = ('product', 'interview')
 
 admin.site.register(InterviewProduct, InterviewProductAdmin)
 
