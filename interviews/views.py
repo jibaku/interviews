@@ -27,6 +27,7 @@ class PreviewInterviewDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PreviewInterviewDetailView, self).get_context_data(**kwargs)
         context['pictures'] = self.object.interviewpicture_set.all()
+        context['latest_interviews'] = Interview.objects.published().exclude(slug__exact=self.kwargs['slug'])[:2]
         context['is_preview'] = True
         return context
 
@@ -75,3 +76,10 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['interviews'] = Interview.objects.published().filter(products__product=self.object)
         return context
+
+class ProductListView(ListView):
+    paginate_by = 12
+    
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        return queryset

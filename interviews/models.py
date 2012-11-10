@@ -5,6 +5,7 @@ import hashlib
 from django.db import models
 from django.conf import settings
 from django.utils import timezone 
+from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.sites.models import Site
 
@@ -12,12 +13,16 @@ from interviews.managers import InterviewManager
 
 class Person(models.Model):
     SEX_CHOICES = (
-        (1, 'Homme'),
-        (2, 'Femme'),
+        (1, _('Man')),
+        (2, _('Woman')),
     )
     name = models.CharField(max_length=255)
     birthdate = models.DateField(blank=True, null=True)
     sex = models.IntegerField(choices=SEX_CHOICES)
+
+    class Meta:
+        verbose_name = _('Person')
+        verbose_name_plural = _('Persons')
 
     def __unicode__(self):
         return self.name
@@ -56,6 +61,8 @@ class Interview(models.Model):
 
     class Meta:
         ordering = ["-published_on"]
+        verbose_name = _('Interview')
+        verbose_name_plural = _('Interviews')
 
     def __unicode__(self):
         return self.title
@@ -103,6 +110,10 @@ class Quote(models.Model):
     author = models.CharField(max_length=255)
     quote = models.TextField()
 
+    class Meta:
+        verbose_name = _('Quote')
+        verbose_name_plural = _('Quotes')
+
 
 class InterviewPicture(models.Model):
     interview = models.ForeignKey(Interview)
@@ -116,6 +127,10 @@ class Product(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     amazon_url = models.URLField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
 
     def __unicode__(self):
         return self.title

@@ -15,7 +15,8 @@ class InterviewPictureInline(admin.TabularInline):
     extra = 4
 
 class PersonAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'sex')
+    list_filter = ('sex',)
 
 admin.site.register(Person, PersonAdmin)
 
@@ -45,7 +46,16 @@ class PictureAdmin(admin.ModelAdmin):
 admin.site.register(Picture, PictureAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-	pass
+    list_display = ('title', 'count', 'preview_link')
+
+    def count(self, obj):
+        return obj.interviewproduct_set.count()
+    count.short_description = 'Interviews'
+
+    def preview_link(self, obj):
+      return '<a href="%s">Preview</a>' % (reverse('product-detail', args=[obj.slug]),)
+    preview_link.short_description = 'Preview'
+    preview_link.allow_tags = True
 
 admin.site.register(Product, ProductAdmin)
 
