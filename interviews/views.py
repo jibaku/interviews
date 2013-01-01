@@ -68,6 +68,13 @@ class InterviewListView(ListView):
         return context
 
 class ProductDetailView(DetailView):
+    def get_object(self):
+        obj = super(ProductDetailView, self).get_object()
+        if obj.interviews_count < 4:
+            if not (self.request.user.is_authenticated() and self.request.user.is_staff):
+                raise Http404
+        return obj
+            
     def get_queryset(self):
         queryset = Product.objects.all()
         return queryset
@@ -81,5 +88,7 @@ class ProductListView(ListView):
     paginate_by = 12
     
     def get_queryset(self):
+        if not (self.request.user.is_authenticated() and self.request.user.is_staff):
+            raise Http404
         queryset = Product.objects.all()
         return queryset

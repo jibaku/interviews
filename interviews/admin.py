@@ -21,9 +21,12 @@ class PersonAdmin(admin.ModelAdmin):
 admin.site.register(Person, PersonAdmin)
 
 class InterviewAdmin(admin.ModelAdmin):
-    list_display = ('title', 'published_on', 'is_published', 'preview_link')
+    list_display = ('title', 'description', 'published_on', 'is_published', 'preview_link')
     list_filter = ('site', 'published_on', 'is_published')
     prepopulated_fields = {"slug": ("title",)}
+    date_hierarchy = 'published_on'
+    ordering = ('is_published', '-published_on')
+    search_fields = ['title', 'description']
     inlines = (AnswerInline, InterviewPictureInline)
 
     def preview_link(self, obj):

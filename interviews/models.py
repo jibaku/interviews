@@ -139,6 +139,10 @@ class Product(models.Model):
     def get_absolute_url(self):
         return ('product-detail', [self.slug])
 
+    @property
+    def interviews_count(self):
+        return Interview.objects.published().filter(products__product=self).count()
+
 
 class InterviewProduct(models.Model):
     interview = models.ForeignKey(Interview, related_name='products')
