@@ -1,17 +1,17 @@
 from distutils.core import setup
- 
+
 setup(
     name = "interviews",
     version = "0.3",
     author = "Fabien Schwob",
     author_email = "github@x-phuture.com",
     license = "BSD",
-    url = "http://bitbucket.org/jibaku/interviews",
+    url = "https://github.com/jibaku/interviews",
     packages = [
         "interviews",
     ],
     classifiers = [
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
