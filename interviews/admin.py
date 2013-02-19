@@ -2,8 +2,8 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 
-from interviews.models import Interview, Answer, Quote, Person
-from interviews.models import Picture, Product, InterviewProduct, InterviewPicture
+from .models import Interview, Answer, Quote, Person
+from .models import Picture, Product, InterviewProduct, InterviewPicture
 
 
 # Inline

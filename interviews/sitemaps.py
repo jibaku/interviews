@@ -1,5 +1,5 @@
 from django.contrib.sitemaps import Sitemap
-from interviews.models import Interview
+from .models import Interview
 
 
 class InterviewSitemap(Sitemap):

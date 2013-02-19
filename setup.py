@@ -1,16 +1,16 @@
 from distutils.core import setup
 
 setup(
-    name = "interviews",
-    version = "0.3",
-    author = "Fabien Schwob",
-    author_email = "github@x-phuture.com",
-    license = "BSD",
-    url = "https://github.com/jibaku/interviews",
-    packages = [
+    name="interviews",
+    version="0.3",
+    author="Fabien Schwob",
+    author_email="github@x-phuture.com",
+    license="BSD",
+    url="https://github.com/jibaku/interviews",
+    packages=[
         "interviews",
     ],
-    classifiers = [
+    classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",

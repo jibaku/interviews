@@ -2,8 +2,8 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.conf import settings
 from django.http import Http404
-from interviews.models import Interview, Product
-from interviews.managers import published
+from .models import Interview, Product
+from .managers import published
 
 
 class InterviewDetailView(DetailView):
