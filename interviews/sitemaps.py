@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from interviews.models import Interview
 
+
 class InterviewSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5

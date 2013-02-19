@@ -5,16 +5,18 @@ from django.http import Http404
 from interviews.models import Interview, Product
 from interviews.managers import published
 
+
 class InterviewDetailView(DetailView):
     def get_queryset(self):
         queryset = Interview.objects.published()
         return queryset
-    
+
     def get_context_data(self, **kwargs):
         context = super(InterviewDetailView, self).get_context_data(**kwargs)
         context['pictures'] = self.object.interviewpicture_set.all()
         context['latest_interviews'] = Interview.objects.published().exclude(slug__exact=self.kwargs['slug'])[:2]
         return context
+
 
 class PreviewInterviewDetailView(DetailView):
     def get_object(self):
@@ -31,9 +33,10 @@ class PreviewInterviewDetailView(DetailView):
         context['is_preview'] = True
         return context
 
+
 class InterviewListView(ListView):
     paginate_by = 5
-    
+
     def get_queryset(self):
         queryset = Interview.objects.published()
         if 'filter_key' in self.kwargs:
@@ -67,6 +70,7 @@ class InterviewListView(ListView):
         context['total_interviews'] = Interview.objects.published().count()
         return context
 
+
 class ProductDetailView(DetailView):
     def get_object(self):
         obj = super(ProductDetailView, self).get_object()
@@ -74,19 +78,20 @@ class ProductDetailView(DetailView):
             if not (self.request.user.is_authenticated() and self.request.user.is_staff):
                 raise Http404
         return obj
-            
+
     def get_queryset(self):
         queryset = Product.objects.all()
         return queryset
-    
+
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['interviews'] = Interview.objects.published().filter(products__product=self.object)
         return context
 
+
 class ProductListView(ListView):
     paginate_by = 12
-    
+
     def get_queryset(self):
         if not (self.request.user.is_authenticated() and self.request.user.is_staff):
             raise Http404

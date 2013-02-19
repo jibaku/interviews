@@ -4,12 +4,13 @@ import hashlib
 
 from django.db import models
 from django.conf import settings
-from django.utils import timezone 
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.sites.models import Site
 
 from interviews.managers import InterviewManager
+
 
 class Person(models.Model):
     SEX_CHOICES = (
@@ -41,22 +42,22 @@ class Interview(models.Model):
     """
     person = models.ForeignKey(Person)
     site = models.ForeignKey(Site, default=settings.SITE_ID)
-    
+
     title = models.CharField(max_length=255)
     slug = models.SlugField()
-    
+
     is_published = models.BooleanField(default=False)
     published_on = models.DateTimeField(default=timezone.now)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(auto_now=True, editable=False)
-    
+
     introduction = models.TextField(blank=True, null=True)
     footnotes = models.TextField(blank=True, null=True)
-    
+
     website = models.URLField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    #place = models.TextField(blank=True, null=True)
-    
+    # place = models.TextField(blank=True, null=True)
+
     objects = InterviewManager()
 
     class Meta:
@@ -83,6 +84,7 @@ class Interview(models.Model):
     def preview_hash(self):
         return hashlib.md5("%s-%s-%s" % (self.id, self.slug, self.site_id)).hexdigest()
 
+
 class Picture(models.Model):
     interview = models.ForeignKey(Interview)
     image = models.ImageField(upload_to='pictures')
@@ -90,6 +92,7 @@ class Picture(models.Model):
 
     def __unicode__(self):
         return "%s - %s (%s)" % (self.interview, self.image, self.legend)
+
 
 class Answer(models.Model):
     interview = models.ForeignKey(Interview)
