@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-10 15:07+0100\n"
+"POT-Creation-Date: 2013-02-19 19:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,42 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: models.py:16
+#: models.py:17
 msgid "Man"
 msgstr "Homme"
 
-#: models.py:17
+#: models.py:18
 msgid "Woman"
 msgstr "Femme"
 
-#: models.py:24
+#: models.py:25
 msgid "Person"
 msgstr "Personne"
 
-#: models.py:25
+#: models.py:26
 msgid "Persons"
 msgstr "Personnes"
 
-#: models.py:64
+#: models.py:65
 msgid "Interview"
 msgstr "Interview"
 
-#: models.py:65
+#: models.py:66
 msgid "Interviews"
 msgstr "Interviews"
 
-#: models.py:114
+#: models.py:94
+msgid "Picture"
+msgstr "Images"
+
+#: models.py:95
+msgid "Pictures"
+msgstr "Images"
+
+#: models.py:109
+msgid "Answer"
+msgstr "Réponse"
+
+#: models.py:110
+msgid "Answers"
+msgstr "Réponses"
+
+#: models.py:123
 msgid "Quote"
 msgstr "Citation"
 
-#: models.py:115
+#: models.py:124
 msgid "Quotes"
 msgstr "Citations"
 
-#: models.py:132
+#: models.py:141
 msgid "Product"
 msgstr "Produit"
 
-#: models.py:133
+#: models.py:142
 msgid "Products"
 msgstr "Produits"

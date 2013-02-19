@@ -48,7 +48,7 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'count', 'preview_link')
+    list_display = ('title', 'slug', 'count', 'preview_link')
     prepopulated_fields = {"slug": ("title",)}
 
     def count(self, obj):

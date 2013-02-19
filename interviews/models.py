@@ -90,6 +90,10 @@ class Picture(models.Model):
     image = models.ImageField(upload_to='pictures')
     legend = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name = _('Picture')
+        verbose_name_plural = _('Pictures')
+
     def __unicode__(self):
         return "%s - %s (%s)" % (self.interview, self.image, self.legend)
 
@@ -102,6 +106,8 @@ class Answer(models.Model):
     related_pictures = models.ManyToManyField(Picture, blank=True)
 
     class Meta:
+        verbose_name = _('Answer')
+        verbose_name_plural = _('Answers')
         unique_together = (
             ('interview', 'order'),
         )
