@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from .views import ProductDetailView, ProductListView
+from ..views import ProductDetailView, ProductListView
 
 urlpatterns = patterns('',
     url(r'^$', ProductListView.as_view(), name='product-list'),

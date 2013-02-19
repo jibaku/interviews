@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from .views import InterviewListView, InterviewDetailView, PreviewInterviewDetailView
+from ..views import InterviewListView, InterviewDetailView, PreviewInterviewDetailView
 
 urlpatterns = patterns('interviews.views',
     url(r'^$', InterviewListView.as_view(), name='interviews-list'),
