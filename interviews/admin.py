@@ -30,6 +30,7 @@ class InterviewAdmin(admin.ModelAdmin):
     ordering = ('is_published', '-published_on')
     search_fields = ['title', 'description']
     inlines = (AnswerInline, InterviewPictureInline)
+    save_on_top = True
 
     def preview_link(self, obj):
         preview_url = reverse('interviews-preview', args=[obj.preview_hash, obj.slug])
