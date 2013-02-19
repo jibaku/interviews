@@ -43,8 +43,12 @@ class QuoteAdmin(admin.ModelAdmin):
 
 
 class PictureAdmin(admin.ModelAdmin):
-    list_display = ('image', 'interview', 'legend')
+    list_display = ('image', 'interview', 'legend_as_html')
     list_filter = ('interview',)
+
+    def legend_as_html(self, obj):
+        return obj.legend
+    legend_as_html.allow_tags = True
 
 
 class ProductAdmin(admin.ModelAdmin):
