@@ -53,18 +53,28 @@ class PictureAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'count', 'preview_link')
+    list_display = (
+        'title', 'slug', 'published_interviews_count',
+        'is_online', 'preview_link')
+    list_filter = ('published_interviews_count',)
     prepopulated_fields = {"slug": ("title",)}
-
-    def count(self, obj):
-        return obj.interviewproduct_set.count()
-    count.short_description = 'Interviews'
+    actions = ['update_published_interviews_count']
 
     def preview_link(self, obj):
         product_preview_url = reverse('product-detail', args=[obj.slug])
         return '<a href="%s">Preview</a>' % (product_preview_url,)
     preview_link.short_description = 'Preview'
     preview_link.allow_tags = True
+
+    def is_online(self, obj):
+        return obj.is_online
+    is_online.boolean = True
+
+    def update_published_interviews_count(self, request, queryset):
+        for product in queryset:
+            product.published_interviews_count = product.interviews_count
+            product.save()
+    update_published_interviews_count.short_description = "Recount the published interviews for the product"
 
 
 class InterviewProductAdmin(admin.ModelAdmin):

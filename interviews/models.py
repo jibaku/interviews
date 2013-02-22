@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import datetime
 import hashlib
+import logging
 
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.sites.models import Site
 
 from .managers import InterviewManager
@@ -136,6 +138,8 @@ class Product(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True)
     amazon_url = models.URLField(blank=True, null=True)
+    # Calculated field
+    published_interviews_count = models.IntegerField(_('Published interviews'), default=0, editable=False)
 
     class Meta:
         verbose_name = _('Product')
@@ -152,7 +156,22 @@ class Product(models.Model):
     def interviews_count(self):
         return Interview.objects.published().filter(products__product=self).count()
 
+    @property
+    def is_online(self):
+        return self.published_interviews_count >= 4
+
 
 class InterviewProduct(models.Model):
     interview = models.ForeignKey(Interview, related_name='products')
     product = models.ForeignKey(Product)
+
+
+# Signals
+@receiver(post_save, sender=InterviewProduct)
+def update_published_interviews_count(sender, **kwargs):
+    try:
+        instance = kwargs['instance']
+        instance.product.published_interviews_count = instance.product.interviews_count
+        instance.product.save()
+    except Exception, e:
+        logging.error(str(e))
