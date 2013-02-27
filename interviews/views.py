@@ -74,7 +74,7 @@ class InterviewListView(ListView):
 class ProductDetailView(DetailView):
     def get_object(self):
         obj = super(ProductDetailView, self).get_object()
-        if obj.interviews_count < 4:
+        if not obj.is_online:
             if not (self.request.user.is_authenticated() and self.request.user.is_staff):
                 raise Http404
         return obj
