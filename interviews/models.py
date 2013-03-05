@@ -75,6 +75,10 @@ class Interview(models.Model):
         return ('interviews-detail', [self.slug])
 
     @property
+    def get_full_url(self):
+        return "http://%s%s" % (self.site.domain, self.get_absolute_url())
+
+    @property
     def answers(self):
         return Answer.objects.for_interview(self)
 
