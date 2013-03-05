@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Interview, Answer, Quote, Person, Brand
 from .models import Picture, Product, InterviewProduct, InterviewPicture
@@ -37,7 +38,7 @@ class InterviewAdmin(admin.ModelAdmin):
     def preview_link(self, obj):
         preview_url = reverse('interviews-preview', args=[obj.preview_hash, obj.slug])
         return '<a href="%s">Preview</a>' % (preview_url,)
-    preview_link.short_description = 'Preview'
+    preview_link.short_description = _(u'Preview')
     preview_link.allow_tags = True
 
 
@@ -70,7 +71,7 @@ class ProductAdmin(admin.ModelAdmin):
     def preview_link(self, obj):
         product_preview_url = reverse('product-detail', args=[obj.slug])
         return '<a href="%s">Preview</a>' % (product_preview_url,)
-    preview_link.short_description = 'Preview'
+    preview_link.short_description = _(u'Preview')
     preview_link.allow_tags = True
 
     def is_online(self, obj):
@@ -81,7 +82,7 @@ class ProductAdmin(admin.ModelAdmin):
         for product in queryset:
             product.published_interviews_count = product.interviews_count
             product.save()
-    update_published_interviews_count.short_description = "Recount the published interviews for the product"
+    update_published_interviews_count.short_description = _(u"Recount the published interviews for the product")
 
 
 class InterviewProductAdmin(admin.ModelAdmin):
@@ -95,4 +96,3 @@ admin.site.register(Interview, InterviewAdmin)
 admin.site.register(InterviewProduct, InterviewProductAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Brand, BrandAdmin)
-
