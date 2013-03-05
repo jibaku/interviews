@@ -133,10 +133,25 @@ class InterviewPicture(models.Model):
 
 
 # Product related
+class Brand(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField()
+
+    class Meta:
+        verbose_name = _('Brand')
+        verbose_name_plural = _('Brands')
+        ordering = ['title']
+
+    def __unicode__(self):
+        return self.title
+
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
+    brand = models.ForeignKey(Brand, blank=True, null=True)
     description = models.TextField(blank=True)
+    alternate_titles = models.TextField(blank=True)
     amazon_url = models.URLField(blank=True, null=True)
     # Calculated field
     published_interviews_count = models.IntegerField(_('Published interviews'), default=0, editable=False)
@@ -144,6 +159,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
+        ordering = ['title']
 
     def __unicode__(self):
         return self.title

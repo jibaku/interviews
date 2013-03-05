@@ -2,14 +2,16 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 
-from .models import Interview, Answer, Quote, Person
+from .models import Interview, Answer, Quote, Person, Brand
 from .models import Picture, Product, InterviewProduct, InterviewPicture
+from .forms import FilterPictureForm
 
 
 # Inline
 class AnswerInline(admin.TabularInline):
     model = Answer
     extra = 3
+    form = FilterPictureForm
 
 
 class InterviewPictureInline(admin.TabularInline):
@@ -52,11 +54,16 @@ class PictureAdmin(admin.ModelAdmin):
     legend_as_html.allow_tags = True
 
 
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug')
+    prepopulated_fields = {"slug": ("title",)}
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'slug', 'published_interviews_count',
+        'title', 'brand', 'slug', 'published_interviews_count',
         'is_online', 'preview_link')
-    list_filter = ('published_interviews_count',)
+    list_filter = ('published_interviews_count', 'brand')
     prepopulated_fields = {"slug": ("title",)}
     actions = ['update_published_interviews_count']
 
@@ -87,3 +94,5 @@ admin.site.register(Picture, PictureAdmin)
 admin.site.register(Interview, InterviewAdmin)
 admin.site.register(InterviewProduct, InterviewProductAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Brand, BrandAdmin)
+
