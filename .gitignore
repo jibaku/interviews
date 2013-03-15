@@ -1,2 +1,4 @@
 *.pyc
 interviews.egg-info
+.tox
+MANIFEST
