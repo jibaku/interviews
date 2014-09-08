@@ -22,6 +22,7 @@ class Person(models.Model):
     name = models.CharField(max_length=255)
     birthdate = models.DateField(blank=True, null=True)
     sex = models.IntegerField(choices=SEX_CHOICES)
+    about = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = _('Person')

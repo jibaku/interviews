@@ -21,12 +21,12 @@ class InterviewPictureInline(admin.TabularInline):
 
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sex')
+    list_display = ('name', 'sex', 'about')
     list_filter = ('sex',)
 
 
 class InterviewAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'published_on', 'is_published', 'preview_link')
+    list_display = ('title', 'description', 'published_on', 'is_published', 'site', 'preview_link')
     list_filter = ('site', 'published_on', 'is_published')
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = 'published_on'
