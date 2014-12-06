@@ -134,7 +134,7 @@ class Quote(models.Model):
 class InterviewPicture(models.Model):
     interview = models.ForeignKey(Interview)
     picture = models.ForeignKey(Picture)
-    is_selected = models.BooleanField()
+    is_selected = models.BooleanField(default=False)
 
 
 # Product related
