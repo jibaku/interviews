@@ -126,6 +126,7 @@ class Answer(models.Model):
 
 class Quote(models.Model):
     related_to = models.ForeignKey(Answer, null=True, blank=True)
+    site = models.ForeignKey(Site, default=settings.SITE_ID)
     author = models.CharField(max_length=255)
     quote = models.TextField()
 
