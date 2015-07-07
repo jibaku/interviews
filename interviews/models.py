@@ -120,15 +120,21 @@ class Answer(models.Model):
         )
         ordering = ['order']
 
+    def __unicode__(self):
+        return u"%s Q. %s" % (self.interview, self.order)
+
 
 class Quote(models.Model):
-    related_to = models.ForeignKey(Answer)
+    related_to = models.ForeignKey(Answer, null=True, blank=True)
     author = models.CharField(max_length=255)
     quote = models.TextField()
 
     class Meta:
         verbose_name = _('Quote')
         verbose_name_plural = _('Quotes')
+
+    def __unicode__(self):
+        return u"%s : %s" % (self.author, self.quote)
 
 
 class InterviewPicture(models.Model):
