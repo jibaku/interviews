@@ -47,8 +47,11 @@ class QuoteAdmin(admin.ModelAdmin):
 
 
 class PictureAdmin(admin.ModelAdmin):
-    list_display = ('image', 'interview', 'legend_as_html')
+    list_display = ('image_filename', 'interview', 'legend_as_html')
     list_filter = ('interview',)
+
+    def image_filename(self, obj):
+        return unicode(obj.image)
 
     def legend_as_html(self, obj):
         return obj.legend
