@@ -35,7 +35,7 @@ class PreviewInterviewDetailView(DetailView):
 
 
 class InterviewListView(ListView):
-    paginate_by = 5
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Interview.objects.published()
@@ -67,6 +67,8 @@ class InterviewListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(InterviewListView, self).get_context_data(**kwargs)
         context['filter'] = self.get_current_filter()
+        context['filter_key'] = self.kwargs.get('filter_key', None)
+        context['filter_value'] = self.kwargs.get('filter_value', None)
         context['total_interviews'] = Interview.objects.published().count()
         return context
 
