@@ -201,5 +201,5 @@ def update_published_interviews_count(sender, **kwargs):
         instance = kwargs['instance']
         instance.product.published_interviews_count = instance.product.interviews_count
         instance.product.save()
-    except Exception, e:
+    except Exception as e:
         logging.error(str(e))
