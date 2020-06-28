@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="interviews",
-    version="0.5",
+    version="0.6",
     author="Fabien Schwob",
     author_email="github@x-phuture.com",
     license="BSD",
