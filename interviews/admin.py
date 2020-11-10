@@ -37,7 +37,7 @@ class InterviewAdmin(admin.ModelAdmin):
 
     def preview_link(self, obj):
         preview_url = reverse('interviews-preview', args=[obj.preview_hash, obj.slug])
-        return '<a href="%s">Preview</a>' % (preview_url,)
+        return '<a href="{0!s}">Preview</a>'.format(preview_url)
     preview_link.short_description = _(u'Preview')
     preview_link.allow_tags = True
 
@@ -73,7 +73,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     def preview_link(self, obj):
         product_preview_url = reverse('product-detail', args=[obj.slug])
-        return '<a href="%s">Preview</a>' % (product_preview_url,)
+        return '<a href="{0!s}">Preview</a>'.format(product_preview_url)
     preview_link.short_description = _(u'Preview')
     preview_link.allow_tags = True
 

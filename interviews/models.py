@@ -77,7 +77,7 @@ class Interview(models.Model):
 
     @property
     def get_full_url(self):
-        return "http://%s%s" % (self.site.domain, self.get_absolute_url())
+        return "http://{0!s}{1!s}".format(self.site.domain, self.get_absolute_url())
 
     @property
     def answers(self):
@@ -89,7 +89,7 @@ class Interview(models.Model):
 
     @property
     def preview_hash(self):
-        return hashlib.md5("%s-%s-%s" % (self.id, self.slug, self.site_id)).hexdigest()
+        return hashlib.md5("{0!s}-{1!s}-{2!s}".format(self.id, self.slug, self.site_id)).hexdigest()
 
 
 class Picture(models.Model):
@@ -102,7 +102,7 @@ class Picture(models.Model):
         verbose_name_plural = _('Pictures')
 
     def __unicode__(self):
-        return "%s - %s (%s)" % (self.interview, self.image, self.legend)
+        return "{0!s} - {1!s} ({2!s})".format(self.interview, self.image, self.legend)
 
 
 class Answer(models.Model):
@@ -121,7 +121,7 @@ class Answer(models.Model):
         ordering = ['order']
 
     def __unicode__(self):
-        return u"%s Q. %s" % (self.interview, self.order)
+        return u"{0!s} Q. {1!s}".format(self.interview, self.order)
 
 
 class Quote(models.Model):
@@ -135,7 +135,7 @@ class Quote(models.Model):
         verbose_name_plural = _('Quotes')
 
     def __unicode__(self):
-        return u"%s : %s" % (self.author, self.quote)
+        return u"{0!s} : {1!s}".format(self.author, self.quote)
 
 
 class InterviewPicture(models.Model):
