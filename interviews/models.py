@@ -43,8 +43,8 @@ class Person(models.Model):
 class Interview(models.Model):
     """
     """
-    person = models.ForeignKey(Person)
-    site = models.ForeignKey(Site, default=settings.SITE_ID)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, default=settings.SITE_ID)
 
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -93,7 +93,7 @@ class Interview(models.Model):
 
 
 class Picture(models.Model):
-    interview = models.ForeignKey(Interview)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='pictures')
     legend = models.TextField(blank=True)
 
@@ -106,7 +106,7 @@ class Picture(models.Model):
 
 
 class Answer(models.Model):
-    interview = models.ForeignKey(Interview)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     order = models.IntegerField()
     question = models.TextField(blank=True)
     response = models.TextField(blank=True)
@@ -125,8 +125,8 @@ class Answer(models.Model):
 
 
 class Quote(models.Model):
-    related_to = models.ForeignKey(Answer, null=True, blank=True)
-    site = models.ForeignKey(Site, default=settings.SITE_ID)
+    related_to = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True, blank=True)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, default=settings.SITE_ID)
     author = models.CharField(max_length=255)
     quote = models.TextField()
 
@@ -139,8 +139,8 @@ class Quote(models.Model):
 
 
 class InterviewPicture(models.Model):
-    interview = models.ForeignKey(Interview)
-    picture = models.ForeignKey(Picture)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
     is_selected = models.BooleanField(default=False)
 
 
@@ -190,8 +190,8 @@ class Product(models.Model):
 
 
 class InterviewProduct(models.Model):
-    interview = models.ForeignKey(Interview, related_name='products')
-    product = models.ForeignKey(Product)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE, related_name='products')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 # Signals
